@@ -8,26 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		AE34484E21EB1C0900504276 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE34484D21EB1C0900504276 /* AppDelegate.swift */; };
-		AE34485021EB1C0900504276 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34484F21EB1C0900504276 /* GameScene.sks */; };
-		AE34485221EB1C0900504276 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34485121EB1C0900504276 /* Actions.sks */; };
 		AE34485421EB1C0900504276 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE34485321EB1C0900504276 /* GameScene.swift */; };
 		AE34485621EB1C0900504276 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE34485521EB1C0900504276 /* GameViewController.swift */; };
 		AE34485921EB1C0900504276 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE34485721EB1C0900504276 /* Main.storyboard */; };
 		AE34485B21EB1C0A00504276 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE34485A21EB1C0A00504276 /* Assets.xcassets */; };
 		AE34485E21EB1C0A00504276 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE34485C21EB1C0A00504276 /* LaunchScreen.storyboard */; };
+		AE34486E21EB2F0300504276 /* Bubbles.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34486D21EB2F0300504276 /* Bubbles.sks */; };
+		AE34487421ED5A5B00504276 /* waterSplash.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34487321ED5A5B00504276 /* waterSplash.sks */; };
+		AE34487821F15D8000504276 /* acme.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE34487721F15D8000504276 /* acme.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AE34484A21EB1C0900504276 /* Blue Ocean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blue Ocean.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE34484D21EB1C0900504276 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AE34484F21EB1C0900504276 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		AE34485121EB1C0900504276 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		AE34485321EB1C0900504276 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		AE34485521EB1C0900504276 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		AE34485821EB1C0900504276 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AE34485A21EB1C0A00504276 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE34485D21EB1C0A00504276 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AE34485F21EB1C0A00504276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE34486D21EB2F0300504276 /* Bubbles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Bubbles.sks; sourceTree = "<group>"; };
+		AE34487321ED5A5B00504276 /* waterSplash.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = waterSplash.sks; sourceTree = "<group>"; };
+		AE34487721F15D8000504276 /* acme.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = acme.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +62,10 @@
 		AE34484C21EB1C0900504276 /* Blue Ocean */ = {
 			isa = PBXGroup;
 			children = (
+				AE34487721F15D8000504276 /* acme.ttf */,
 				AE34484D21EB1C0900504276 /* AppDelegate.swift */,
-				AE34484F21EB1C0900504276 /* GameScene.sks */,
-				AE34485121EB1C0900504276 /* Actions.sks */,
+				AE34487321ED5A5B00504276 /* waterSplash.sks */,
+				AE34486D21EB2F0300504276 /* Bubbles.sks */,
 				AE34485321EB1C0900504276 /* GameScene.swift */,
 				AE34485521EB1C0900504276 /* GameViewController.swift */,
 				AE34485721EB1C0900504276 /* Main.storyboard */,
@@ -132,10 +135,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE34485921EB1C0900504276 /* Main.storyboard in Resources */,
-				AE34485021EB1C0900504276 /* GameScene.sks in Resources */,
+				AE34487821F15D8000504276 /* acme.ttf in Resources */,
+				AE34487421ED5A5B00504276 /* waterSplash.sks in Resources */,
 				AE34485B21EB1C0A00504276 /* Assets.xcassets in Resources */,
 				AE34485E21EB1C0A00504276 /* LaunchScreen.storyboard in Resources */,
-				AE34485221EB1C0900504276 /* Actions.sks in Resources */,
+				AE34486E21EB2F0300504276 /* Bubbles.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
