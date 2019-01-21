@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="RifficFree-Bold.ttf">
+            <string>RifficFree-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -17,12 +22,97 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DI5-S4-ebF">
+                                <rect key="frame" x="16" y="36" width="96" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="VNr-pD-jwe"/>
+                                    <constraint firstAttribute="width" constant="96" id="hNY-he-ZaQ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cashAmount" translatesAutoresizingMaskIntoConstraints="NO" id="4RG-Xa-Ytd">
+                                <rect key="frame" x="20" y="40" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="0uS-QH-XM6"/>
+                                    <constraint firstAttribute="height" constant="24" id="WN5-SR-OF1"/>
+                                </constraints>
+                            </imageView>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FXK-Jb-e7m">
+                                <rect key="frame" x="263" y="36" width="96" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="96" id="mnY-g7-c2u"/>
+                                    <constraint firstAttribute="height" constant="32" id="vb9-MD-NHK"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="stars" translatesAutoresizingMaskIntoConstraints="NO" id="NhA-Xj-He0">
+                                <rect key="frame" x="267" y="40" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="MW1-aG-pex"/>
+                                    <constraint firstAttribute="width" constant="24" id="S4U-UX-Rf9"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$3500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bV8-8a-Qe2">
+                                <rect key="frame" x="48" y="41.5" width="49.5" height="21"/>
+                                <fontDescription key="fontDescription" name="RifficFree-Bold" family="Riffic Free" pointSize="17"/>
+                                <color key="textColor" red="0.41568627450980389" green="0.74509803921568629" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JjP-LZ-ZeU">
+                                <rect key="frame" x="295" y="41.5" width="16.5" height="21"/>
+                                <fontDescription key="fontDescription" name="RifficFree-Bold" family="Riffic Free" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRM-Wy-x0E">
+                                <rect key="frame" x="161.5" y="38.5" width="52" height="27.5"/>
+                                <fontDescription key="fontDescription" name="RifficFree-Bold" family="Riffic Free" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="FXK-Jb-e7m" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="16" id="Bow-CU-pdm"/>
+                            <constraint firstItem="4RG-Xa-Ytd" firstAttribute="centerY" secondItem="DI5-S4-ebF" secondAttribute="centerY" id="GQc-PP-ygy"/>
+                            <constraint firstItem="NhA-Xj-He0" firstAttribute="leading" secondItem="FXK-Jb-e7m" secondAttribute="leading" constant="4" id="Ghd-ab-p6I"/>
+                            <constraint firstItem="4RG-Xa-Ytd" firstAttribute="leading" secondItem="DI5-S4-ebF" secondAttribute="leading" constant="4" id="Nnp-Xn-NQU"/>
+                            <constraint firstItem="DI5-S4-ebF" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="16" id="R0N-Dq-Op6"/>
+                            <constraint firstItem="NhA-Xj-He0" firstAttribute="centerY" secondItem="FXK-Jb-e7m" secondAttribute="centerY" id="V1R-fm-gP7"/>
+                            <constraint firstItem="JRM-Wy-x0E" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="XIc-M5-qpO"/>
+                            <constraint firstItem="bV8-8a-Qe2" firstAttribute="leading" secondItem="4RG-Xa-Ytd" secondAttribute="trailing" constant="4" id="cer-6U-vFX"/>
+                            <constraint firstItem="JjP-LZ-ZeU" firstAttribute="leading" secondItem="NhA-Xj-He0" secondAttribute="trailing" constant="4" id="eNe-YZ-zcc"/>
+                            <constraint firstItem="JRM-Wy-x0E" firstAttribute="centerY" secondItem="FXK-Jb-e7m" secondAttribute="centerY" id="gbD-gM-BK3"/>
+                            <constraint firstItem="bV8-8a-Qe2" firstAttribute="centerY" secondItem="DI5-S4-ebF" secondAttribute="centerY" id="nV7-LX-HAH"/>
+                            <constraint firstItem="JjP-LZ-ZeU" firstAttribute="centerY" secondItem="FXK-Jb-e7m" secondAttribute="centerY" id="pgF-2N-kmb"/>
+                            <constraint firstItem="DI5-S4-ebF" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="16" id="yyp-gp-TAT"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="FXK-Jb-e7m" secondAttribute="trailing" constant="16" id="z7N-Yi-C4L"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
+                    <connections>
+                        <outlet property="moneyLabel" destination="bV8-8a-Qe2" id="meo-X1-O9F"/>
+                        <outlet property="starsLabel" destination="JjP-LZ-ZeU" id="90s-vz-5BS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="31.934032983508249"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cashAmount" width="110" height="110"/>
+        <image name="stars" width="110" height="110"/>
+    </resources>
 </document>

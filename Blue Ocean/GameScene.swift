@@ -9,6 +9,10 @@
 import SpriteKit
 import GameplayKit
 
+var globalMoney = 0
+var globalDistanceLeft = 0
+var globalStars = 0
+
 class GameScene: SKScene {
     
     //
@@ -19,15 +23,19 @@ class GameScene: SKScene {
     
     //sprite nodes
     var masterBoat = SKSpriteNode()
+    var woodBoat = SKSpriteNode()
+    var beach = SKSpriteNode()
+    var beachWater = SKSpriteNode()
+    
+    //particles
     var boatBubbles = SKEmitterNode()
+    var itemBubbles = SKEmitterNode()
     var splash = SKEmitterNode()
     
     //label nodes
-    var moneyNode = SKLabelNode(fontNamed: "acme")
+    var moneyNode = SKLabelNode(fontNamed: "RifficFree-Bold")
     
     //user specific
-    var money : UInt = 0
-    
     var levelMultipler = 1
     var level = 1
     
@@ -96,8 +104,108 @@ class GameScene: SKScene {
         boatBubbles.particleScale = CGFloat(0.3)
         boatBubbles.zPosition = -1
         boatBubbles.particleScale = CGFloat(0.1)
-        boatBubbles.isUserInteractionEnabled = true
         Node.addChild(boatBubbles)
+    }
+    
+    func animateBeachWater() {
+        beachWater.run(.sequence([
+            .wait(forDuration: 10),
+            .repeatForever(.sequence([
+                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 105), duration: 1.2),
+                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 140), duration: 0.8)
+                ]))
+            ]))
+    }
+    
+    func animateBeach() {
+        beach.run(.sequence([
+            .wait(forDuration: 10),
+            .repeatForever(.sequence([
+                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 90), duration: 0.8),
+                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 120), duration: 1.2)
+                ]))
+            ]))
+    }
+    
+    func bringNodeIntoView(node: SKSpriteNode, position: CGPoint) {
+        node.run(.sequence([
+            .wait(forDuration: TimeInterval() * 2),
+            .repeatForever(.sequence([
+                .move(to: position, duration: 10)
+                ]))
+            ]))
+    }
+    
+    func boatLands() {
+        masterBoat.run(.sequence([
+            .wait(forDuration: 10),
+            .sequence([
+                .move(to: CGPoint(x: self.frame.width / 2, y: (beach.position.y) - 850), duration: 1.5)
+                ])
+            ]))
+    }
+    
+    func beachAppear() {
+        
+        addGarbageTimer?.invalidate()
+        
+        let origin = (self.frame.height)*2
+        
+        beach = SKSpriteNode.init(imageNamed: "beach")
+        beach.position = CGPoint(x: self.frame.width / 2, y: origin - 100)
+        beach.zPosition = 2
+        beach.size = CGSize(width: 600, height: 300)
+        self.addChild(beach)
+        
+        let dock = SKSpriteNode.init(imageNamed: "dock")
+        dock.size = CGSize(width: 30, height: 550)
+        dock.position = CGPoint(x: (self.frame.width / 2) - 5, y: origin)
+        dock.zPosition = 3
+        self.addChild(dock)
+        
+//        woodBoat = SKSpriteNode.init(imageNamed: "woodBoat")
+//        woodBoat.size = CGSize(width: 100, height: 100)
+//        woodBoat.position = CGPoint(x: (beach.frame.width / 8), y: (beach.position.y) + 30)
+//        woodBoat.name = "woodBoat"
+//        woodBoat.zPosition = 3
+//        woodBoat.zRotation = (20 * .pi) / 180
+//        self.addChild(woodBoat)
+        
+        beachWater = SKSpriteNode.init(imageNamed: "beachWater")
+        beachWater.position = CGPoint(x: self.frame.width / 2, y: origin - 125)
+        beachWater.zPosition = 1
+        beachWater.size = CGSize(width: 600, height: 300)
+        self.addChild(beachWater)
+        
+        bringNodeIntoView(node: beach, position: CGPoint(x: self.frame.width / 2, y: self.frame.height - 100))
+        bringNodeIntoView(node: beachWater, position: CGPoint(x: self.frame.width / 2, y: self.frame.height - 125))
+        bringNodeIntoView(node: dock, position: CGPoint(x: (self.frame.width / 3), y: self.frame.height))
+        
+        animateBeach()
+        animateBeachWater()
+        boatLands()
+        
+        boatBubbles.run(.sequence([.wait(forDuration: 7),.fadeOut(withDuration: 4)]))
+    }
+    
+    func removeItem(node: SKSpriteNode) {
+        
+        globalMoney += 10
+        moneyNode.text = "$\(globalMoney)"
+        addedCash()
+        
+        let valueSprite = SKLabelNode(fontNamed: "RifficFree-Bold")
+        valueSprite.color = UIColor.white
+        valueSprite.text = "$10"
+        valueSprite.position = CGPoint(x: node.position.x, y: node.position.y + 10)
+        valueSprite.fontSize = 18
+        valueSprite.zPosition = 10
+        valueSprite.isUserInteractionEnabled = true
+        self.addChild(valueSprite)
+        
+        //touchedNode(node: node as! SKSpriteNode)
+        animateValue(labelNode: valueSprite)
+        
     }
     
     //timer functions
@@ -150,21 +258,21 @@ class GameScene: SKScene {
     //
     
     override func sceneDidLoad() {
-        
-        boatDriveBy()
+
         masterBoat = SKSpriteNode.init(imageNamed: "boaty")
         masterBoat.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         masterBoat.size = CGSize(width: 100, height: 100)
-        masterBoat.zPosition = 1
+        masterBoat.zPosition = 10
         self.addChild(masterBoat)
         animateNodes(node: masterBoat)
         addBoatBubbles(Node: masterBoat)
         
-        moneyNode.text = "$\(money)"
-        moneyNode.fontSize = 24
-        moneyNode.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 30)
+        moneyNode.text = "$\(globalMoney)"
+        moneyNode.fontSize = 20
+        moneyNode.position = CGPoint(x: self.frame.minX + 60, y: self.frame.height - 42)
+        moneyNode.fontColor = UIColor(red:0.49, green:0.75, blue:0.29, alpha:1.0)
         moneyNode.zPosition = 5
-        self.addChild(moneyNode)
+        //self.addChild(moneyNode)
         
         self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
         
@@ -182,24 +290,8 @@ class GameScene: SKScene {
                     
                 } else if targetNode.name == "garbage" {
                 
-                targetNode.isUserInteractionEnabled = true
-                
-                money += 10
-                moneyNode.text = "$\(money)"
-                addedCash()
-                    
-                let valueSprite = SKLabelNode(fontNamed: "acme")
-                valueSprite.color = UIColor.white
-                valueSprite.text = "$10"
-                valueSprite.position = CGPoint(x: targetNode.position.x, y: targetNode.position.y + 10)
-                valueSprite.fontSize = 18
-                valueSprite.zPosition = 10
-                valueSprite.isUserInteractionEnabled = true
-                self.addChild(valueSprite)
-                
-                touchedNode(node: targetNode as! SKSpriteNode)
-                animateValue(labelNode: valueSprite)
-                    
+                    targetNode.isUserInteractionEnabled = true
+                    removeItem(node: targetNode as! SKSpriteNode)
                 }
                 let desiredPath = Bundle.main.path(forResource: "waterSplash", ofType: "sks")
                 splash = NSKeyedUnarchiver.unarchiveObject(withFile: desiredPath!) as! SKEmitterNode
@@ -218,6 +310,7 @@ class GameScene: SKScene {
                         ]))
                     ]))
         }
+        
         
     }
     

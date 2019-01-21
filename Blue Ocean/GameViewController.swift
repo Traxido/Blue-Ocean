@@ -11,6 +11,9 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
+    var updateTimer: Timer? = nil
+    var money = Int()
+    var stars = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +25,18 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
             view.presentScene(scene)
+            money = globalMoney
+            moneyLabel.text = "$\(money)"
+            self.updateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update), userInfo: nil, repeats: true)
         }
+    }
+    
+    @IBOutlet weak var moneyLabel: UILabel!
+    @IBOutlet weak var starsLabel: UILabel!
+    
+    @objc func update() {
+        money = globalMoney
+        moneyLabel.text = "$\(money)"
     }
     
     override var prefersStatusBarHidden: Bool {

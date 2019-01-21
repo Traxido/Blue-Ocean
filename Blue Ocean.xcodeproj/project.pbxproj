@@ -15,7 +15,8 @@
 		AE34485E21EB1C0A00504276 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE34485C21EB1C0A00504276 /* LaunchScreen.storyboard */; };
 		AE34486E21EB2F0300504276 /* Bubbles.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34486D21EB2F0300504276 /* Bubbles.sks */; };
 		AE34487421ED5A5B00504276 /* waterSplash.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34487321ED5A5B00504276 /* waterSplash.sks */; };
-		AE34487821F15D8000504276 /* acme.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE34487721F15D8000504276 /* acme.ttf */; };
+		AEE7F12221F40B02007DAC9A /* RifficFree-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEE7F12121F40B02007DAC9A /* RifficFree-Bold.ttf */; };
+		AEE7F12421F40C0E007DAC9A /* Dimbo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +30,8 @@
 		AE34485F21EB1C0A00504276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE34486D21EB2F0300504276 /* Bubbles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Bubbles.sks; sourceTree = "<group>"; };
 		AE34487321ED5A5B00504276 /* waterSplash.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = waterSplash.sks; sourceTree = "<group>"; };
-		AE34487721F15D8000504276 /* acme.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = acme.ttf; sourceTree = "<group>"; };
+		AEE7F12121F40B02007DAC9A /* RifficFree-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RifficFree-Bold.ttf"; sourceTree = "<group>"; };
+		AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dimbo.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +64,8 @@
 		AE34484C21EB1C0900504276 /* Blue Ocean */ = {
 			isa = PBXGroup;
 			children = (
-				AE34487721F15D8000504276 /* acme.ttf */,
+				AEE7F12121F40B02007DAC9A /* RifficFree-Bold.ttf */,
+				AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */,
 				AE34484D21EB1C0900504276 /* AppDelegate.swift */,
 				AE34487321ED5A5B00504276 /* waterSplash.sks */,
 				AE34486D21EB2F0300504276 /* Bubbles.sks */,
@@ -135,10 +138,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE34485921EB1C0900504276 /* Main.storyboard in Resources */,
-				AE34487821F15D8000504276 /* acme.ttf in Resources */,
 				AE34487421ED5A5B00504276 /* waterSplash.sks in Resources */,
 				AE34485B21EB1C0A00504276 /* Assets.xcassets in Resources */,
 				AE34485E21EB1C0A00504276 /* LaunchScreen.storyboard in Resources */,
+				AEE7F12421F40C0E007DAC9A /* Dimbo.ttf in Resources */,
+				AEE7F12221F40B02007DAC9A /* RifficFree-Bold.ttf in Resources */,
 				AE34486E21EB2F0300504276 /* Bubbles.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

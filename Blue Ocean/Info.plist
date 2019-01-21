@@ -22,7 +22,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>acme.ttf</string>
+		<string>Dimbo.ttf</string>
+		<string>RifficFree-Bold.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
