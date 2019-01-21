@@ -21,6 +21,11 @@ class GameScene: SKScene {
     //
     //
     
+    //boat specifics
+    var boatReach = CGFloat()
+    var listOfBoatReachCoords : [CGFloat] = []
+    var bubblesOffsetY = CGFloat()
+    
     //sprite nodes
     var masterBoat = SKSpriteNode()
     var woodBoat = SKSpriteNode()
@@ -87,8 +92,6 @@ class GameScene: SKScene {
                 ]))
             ]))
         
-        print((TimeInterval(moveDuration)))
-        
         node.run(.sequence([
             .wait(forDuration: TimeInterval() * 0),
             .repeatForever(.sequence([
@@ -112,7 +115,7 @@ class GameScene: SKScene {
     func addBoatBubbles(Node: SKSpriteNode) {
         let desiredPath = Bundle.main.path(forResource: "Bubbles", ofType: "sks")
         boatBubbles = NSKeyedUnarchiver.unarchiveObject(withFile: desiredPath!) as! SKEmitterNode
-        boatBubbles.position = CGPoint(x: 0, y: 0)
+        boatBubbles.position = CGPoint(x: 0, y: 0 - bubblesOffsetY)
         boatBubbles.particleScale = CGFloat(0.3)
         boatBubbles.zPosition = -1
         boatBubbles.particleScale = CGFloat(0.1)
@@ -246,7 +249,6 @@ class GameScene: SKScene {
     func boatDriveBy() {
         let randomSpeedBoat = Int(arc4random_uniform(UInt32(speedBoatImageNames.count)))
         let speedBoat = SKSpriteNode.init(imageNamed: speedBoatImageNames[randomSpeedBoat])
-        print(speedBoatImageNames[randomSpeedBoat])
         speedBoat.size = CGSize(width: 100, height: 100)
         speedBoat.zPosition = 10
         speedBoat.position = CGPoint(x: (self.frame.width / 4)*3, y: -200)
@@ -270,10 +272,16 @@ class GameScene: SKScene {
     //
     
     override func sceneDidLoad() {
-
-        masterBoat = SKSpriteNode.init(imageNamed: "boaty")
+        
+        bubblesOffsetY = 30
+        boatReach = 50
+        for i in Int((self.frame.width / 2) - boatReach )...Int((self.frame.width / 2) + boatReach ) {
+            listOfBoatReachCoords.append(CGFloat(i))
+        }
+        
+        masterBoat = SKSpriteNode.init(imageNamed: "bigBoat")
         masterBoat.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
-        masterBoat.size = CGSize(width: 100, height: 100)
+        masterBoat.size = CGSize(width: 250, height: 250)
         masterBoat.zPosition = 10
         self.addChild(masterBoat)
         animateNodes(node: masterBoat)
@@ -323,7 +331,6 @@ class GameScene: SKScene {
                     ]))
         }
         
-        
     }
     
     override func didMove(to view: SKView) {
@@ -332,10 +339,25 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-    }
-    
-
-    
-
+        let boatMaxY = masterBoat.frame.maxY
+        
+        for i in 0...(listOfBoatReachCoords.count - 1) {
+            
+            let targetNode = atPoint(CGPoint(x: listOfBoatReachCoords[i], y: boatMaxY))
+            
+            if targetNode == self {
+                
+            } else if targetNode.name == "garbage" {
+                
+                targetNode.name = "removedGarbage"
+                targetNode.isUserInteractionEnabled = true
+                removeItem(node: targetNode as! SKSpriteNode)
+                
+            } else {
+                
+            }
+        }
+        
+}
 }
 
