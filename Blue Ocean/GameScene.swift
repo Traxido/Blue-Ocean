@@ -203,7 +203,7 @@ class GameScene: SKScene {
         valueSprite.isUserInteractionEnabled = true
         self.addChild(valueSprite)
         
-        //touchedNode(node: node as! SKSpriteNode)
+        touchedNode(node: node)
         animateValue(labelNode: valueSprite)
         
     }
