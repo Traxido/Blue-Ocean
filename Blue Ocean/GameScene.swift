@@ -69,19 +69,31 @@ class GameScene: SKScene {
                                  .scale(to: 1, duration: 0.05)]))
     }
     
-    func touchedNode(node: SKSpriteNode) {
+    func removeNodeAnimation(node: SKSpriteNode) {
+        
+        node.removeAllActions()
+        node.zPosition = 100
+        
+        let itemSpeed = frame.size.width / 1.0
+        let moveDifference = CGPoint(x: masterBoat.position.x - node.position.x, y: masterBoat.position.y - node.position.y)
+        let distanceToMove = sqrt(moveDifference.x * moveDifference.x + moveDifference.y * moveDifference.y)
+        let moveDuration = distanceToMove / itemSpeed
+        
         node.run(.sequence([
             .wait(forDuration: TimeInterval() * 0),
             .repeatForever(.sequence([
-                .fadeOut(withDuration: 0.3)
+                .move(to: masterBoat.position, duration: (TimeInterval(moveDuration))),
+                .removeFromParent()
                 ]))
             ]))
         
+        print((TimeInterval(moveDuration)))
+        
         node.run(.sequence([
-            .wait(forDuration: TimeInterval() * 0.2),
+            .wait(forDuration: TimeInterval() * 0),
             .repeatForever(.sequence([
-                .scale(to: 1.5, duration: 0.4),
-                .removeFromParent()
+                .scale(by: 1.5, duration: (TimeInterval(moveDuration/2))),
+                .scale(by: 0.2, duration: (TimeInterval(moveDuration/2)))
                 ]))
             ]))
     }
@@ -203,7 +215,7 @@ class GameScene: SKScene {
         valueSprite.isUserInteractionEnabled = true
         self.addChild(valueSprite)
         
-        touchedNode(node: node)
+        removeNodeAnimation(node: node)
         animateValue(labelNode: valueSprite)
         
     }
