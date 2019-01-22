@@ -17,6 +17,8 @@
 		AE34487421ED5A5B00504276 /* waterSplash.sks in Resources */ = {isa = PBXBuildFile; fileRef = AE34487321ED5A5B00504276 /* waterSplash.sks */; };
 		AEE7F12221F40B02007DAC9A /* RifficFree-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEE7F12121F40B02007DAC9A /* RifficFree-Bold.ttf */; };
 		AEE7F12421F40C0E007DAC9A /* Dimbo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */; };
+		AEE7F13021F6BEC6007DAC9A /* splashSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEE7F12F21F6BEC6007DAC9A /* splashSound.wav */; };
+		AEE7F13221F6C003007DAC9A /* waves.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEE7F13121F6C003007DAC9A /* waves.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		AE34487321ED5A5B00504276 /* waterSplash.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = waterSplash.sks; sourceTree = "<group>"; };
 		AEE7F12121F40B02007DAC9A /* RifficFree-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RifficFree-Bold.ttf"; sourceTree = "<group>"; };
 		AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dimbo.ttf; sourceTree = "<group>"; };
+		AEE7F12F21F6BEC6007DAC9A /* splashSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = splashSound.wav; sourceTree = "<group>"; };
+		AEE7F13121F6C003007DAC9A /* waves.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waves.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 			children = (
 				AEE7F12121F40B02007DAC9A /* RifficFree-Bold.ttf */,
 				AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */,
+				AEE7F12F21F6BEC6007DAC9A /* splashSound.wav */,
+				AEE7F13121F6C003007DAC9A /* waves.wav */,
 				AE34484D21EB1C0900504276 /* AppDelegate.swift */,
 				AE34487321ED5A5B00504276 /* waterSplash.sks */,
 				AE34486D21EB2F0300504276 /* Bubbles.sks */,
@@ -139,8 +145,10 @@
 			files = (
 				AE34485921EB1C0900504276 /* Main.storyboard in Resources */,
 				AE34487421ED5A5B00504276 /* waterSplash.sks in Resources */,
+				AEE7F13221F6C003007DAC9A /* waves.wav in Resources */,
 				AE34485B21EB1C0A00504276 /* Assets.xcassets in Resources */,
 				AE34485E21EB1C0A00504276 /* LaunchScreen.storyboard in Resources */,
+				AEE7F13021F6BEC6007DAC9A /* splashSound.wav in Resources */,
 				AEE7F12421F40C0E007DAC9A /* Dimbo.ttf in Resources */,
 				AEE7F12221F40B02007DAC9A /* RifficFree-Bold.ttf in Resources */,
 				AE34486E21EB2F0300504276 /* Bubbles.sks in Resources */,

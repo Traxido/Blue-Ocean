@@ -20,6 +20,8 @@ class boat {
 var globalMoney = 0
 var globalDistanceLeft = 0
 var globalStars = 0
+var globalXp = 0
+
 var passMasterBoat = boat()
 
 
@@ -32,7 +34,8 @@ class GameScene: SKScene {
     //
     //
     
-    //passedVariables
+    //Sound
+    let splashSound = SKAction.playSoundFileNamed("splashSound.wav", waitForCompletion: false)
     
     
     //conversioons
@@ -85,6 +88,7 @@ class GameScene: SKScene {
     var removeTimer: Timer? = nil
     var addGarbageTimer: Timer? = nil
     var loadBoat : Timer? = nil
+    var playOceanSound : Timer? = nil
     
     //collections
     var potentialGarbage : [String] = ["baggie","book","book2","book3","book6","bottle","bottle1","bottle2","brush","cd","paper","paper1","paper2","paper3","paper4","plasticBag","tool","wheel"]
@@ -244,6 +248,7 @@ class GameScene: SKScene {
     func removeItem(node: SKSpriteNode) {
         
         globalMoney += 10
+        globalXp += 1
         moneyNode.text = "$\(globalMoney)"
         addedCash()
         
@@ -258,6 +263,7 @@ class GameScene: SKScene {
         
         removeNodeAnimation(node: node)
         animateValue(labelNode: valueSprite)
+        run(splashSound)
         
     }
     
@@ -320,8 +326,15 @@ class GameScene: SKScene {
         
         self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
         self.loadBoat = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(buildBoat), userInfo: nil, repeats: true)
+        self.playOceanSound = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(playWaves), userInfo: nil, repeats: true)
+        let waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
+        run(waves)
         
-        
+    }
+    
+    @objc func playWaves() {
+        let waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
+        run(waves)
     }
     
     @objc func buildBoat() {
@@ -376,12 +389,15 @@ class GameScene: SKScene {
                 
                 if targetNode == self {
                     
+                    run(splashSound)
+                    
                 } else if targetNode == masterBoat {
                     
                 } else if targetNode.name == "garbage" {
                 
                     targetNode.isUserInteractionEnabled = true
                     removeItem(node: targetNode as! SKSpriteNode)
+                    
                 }
                 let desiredPath = Bundle.main.path(forResource: "waterSplash", ofType: "sks")
                 splash = NSKeyedUnarchiver.unarchiveObject(withFile: desiredPath!) as! SKEmitterNode
@@ -422,6 +438,23 @@ class GameScene: SKScene {
                 targetNode.name = "removedGarbage"
                 targetNode.isUserInteractionEnabled = true
                 removeItem(node: targetNode as! SKSpriteNode)
+                
+                let desiredPath = Bundle.main.path(forResource: "waterSplash", ofType: "sks")
+                splash = NSKeyedUnarchiver.unarchiveObject(withFile: desiredPath!) as! SKEmitterNode
+                splash.position = (CGPoint(x: listOfBoatReachCoords[i], y: boatMaxY))
+                splash.particleScale = CGFloat(0.3)
+                splash.zPosition = -1
+                splash.particleScale = CGFloat(0.1)
+                splash.isUserInteractionEnabled = true
+                self.addChild(splash)
+                
+                splash.run(.sequence([
+                    .wait(forDuration: TimeInterval() * 0),
+                    .repeatForever(.sequence([
+                        .wait(forDuration: 1),
+                        .removeFromParent()
+                        ]))
+                    ]))
                 
             } else {
                 
