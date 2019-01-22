@@ -9,9 +9,20 @@
 import SpriteKit
 import GameplayKit
 
+class boat {
+    var name = String()
+    var imageName = String()
+    var tierLevel = Int()
+    var bubblesOffset = CGFloat()
+    
+}
+
 var globalMoney = 0
 var globalDistanceLeft = 0
 var globalStars = 0
+var passMasterBoat = boat()
+
+
 
 class GameScene: SKScene {
     
@@ -21,10 +32,36 @@ class GameScene: SKScene {
     //
     //
     
+    //passedVariables
+    
+    
+    //conversioons
+    var passedMasterBoat = boat()
+    
+    let tier1Width : CGFloat = 30
+    let tier2Width : CGFloat = 52
+    let tier3Width : CGFloat = 100
+    let tier4Width : CGFloat = 158
+    
+    let tier1Height : CGFloat = 54
+    let tier2Height : CGFloat = 100
+    let tier3Height : CGFloat = 240
+    let tier4Height : CGFloat = 374
+    
+    let tier1BubbleOffset : CGFloat = 0
+    let tier2BubbleOffset : CGFloat = 0
+    let tier3BubbleOffset : CGFloat = 30
+    let tier4BubbleOffset : CGFloat = 50
+    
+    var localTier = Int()
+    
+    
     //boat specifics
     var boatReach = CGFloat()
-    var listOfBoatReachCoords : [CGFloat] = []
+    var listOfBoatReachCoords : [CGFloat] = [-100,-99]
     var bubblesOffsetY = CGFloat()
+    var masterBoatWidth = CGFloat()
+    var masterBoatHeight = CGFloat()
     
     //sprite nodes
     var masterBoat = SKSpriteNode()
@@ -47,6 +84,7 @@ class GameScene: SKScene {
     //timers
     var removeTimer: Timer? = nil
     var addGarbageTimer: Timer? = nil
+    var loadBoat : Timer? = nil
     
     //collections
     var potentialGarbage : [String] = ["baggie","book","book2","book3","book6","bottle","bottle1","bottle2","brush","cd","paper","paper1","paper2","paper3","paper4","plasticBag","tool","wheel"]
@@ -273,20 +311,6 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
-        bubblesOffsetY = 30
-        boatReach = 50
-        for i in Int((self.frame.width / 2) - boatReach )...Int((self.frame.width / 2) + boatReach ) {
-            listOfBoatReachCoords.append(CGFloat(i))
-        }
-        
-        masterBoat = SKSpriteNode.init(imageNamed: "bigBoat")
-        masterBoat.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
-        masterBoat.size = CGSize(width: 250, height: 250)
-        masterBoat.zPosition = 10
-        self.addChild(masterBoat)
-        animateNodes(node: masterBoat)
-        addBoatBubbles(Node: masterBoat)
-        
         moneyNode.text = "$\(globalMoney)"
         moneyNode.fontSize = 20
         moneyNode.position = CGPoint(x: self.frame.minX + 60, y: self.frame.height - 42)
@@ -295,7 +319,53 @@ class GameScene: SKScene {
         //self.addChild(moneyNode)
         
         self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
+        self.loadBoat = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(buildBoat), userInfo: nil, repeats: true)
         
+        
+    }
+    
+    @objc func buildBoat() {
+        
+        passedMasterBoat = passMasterBoat
+        
+        if passedMasterBoat.tierLevel == 1 {
+            boatReach = tier1Width/2
+            masterBoatWidth = tier1Width
+            masterBoatHeight = tier1Height
+            bubblesOffsetY = tier1BubbleOffset
+        } else if passedMasterBoat.tierLevel == 2 {
+            boatReach = tier2Width/2
+            masterBoatWidth = tier2Width
+            masterBoatHeight = tier2Height
+            bubblesOffsetY = tier2BubbleOffset
+        } else if passedMasterBoat.tierLevel == 3 {
+            boatReach = tier3Width/2
+            masterBoatWidth = tier3Width
+            masterBoatHeight = tier3Height
+            bubblesOffsetY = tier3BubbleOffset
+        } else if passedMasterBoat.tierLevel == 4 {
+            boatReach = tier4Width/2
+            masterBoatWidth = tier4Width
+            masterBoatHeight = tier4Height
+            bubblesOffsetY = tier4BubbleOffset
+        }
+        
+        print(passedMasterBoat.imageName)
+        for i in Int((self.frame.width / 2) - boatReach )...Int((self.frame.width / 2) + boatReach ) {
+            listOfBoatReachCoords.append(CGFloat(i))
+        }
+        
+        masterBoat = SKSpriteNode.init(imageNamed: passedMasterBoat.imageName)
+        masterBoat.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
+        masterBoat.size = CGSize(width: masterBoatWidth, height: masterBoatHeight)
+        masterBoat.zPosition = 10
+        masterBoat.name = passedMasterBoat.imageName
+        self.addChild(masterBoat)
+        
+        animateNodes(node: masterBoat)
+        addBoatBubbles(Node: masterBoat)
+
+        loadBoat?.invalidate()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

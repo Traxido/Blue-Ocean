@@ -9,7 +9,13 @@
 import UIKit
 import SpriteKit
 
+var tier = 9
+
 class GameViewController: UIViewController {
+    
+    var boats : [boat] = []
+    
+    var selectetBoat = boat()
     
     var updateTimer: Timer? = nil
     var money = Int()
@@ -24,11 +30,28 @@ class GameViewController: UIViewController {
             view.ignoresSiblingOrder = true
             view.showsFPS = true
             view.showsNodeCount = true
+            scene.passedMasterBoat.tierLevel = 4
             view.presentScene(scene)
             money = globalMoney
             moneyLabel.text = "$\(money)"
             self.updateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            
+            initBoat(imgName: "woodBoat", tier: 1)
+            initBoat(imgName: "patrolBoat", tier: 2)
+            initBoat(imgName: "freighter", tier: 3)
+            initBoat(imgName: "aircraftCarrier", tier: 4)
+            
+            passMasterBoat = boats[2]
         }
+    }
+    
+    func initBoat(imgName: String, tier: Int) {
+        let newBoat = boat()
+        newBoat.name = imgName
+        newBoat.imageName = imgName
+        newBoat.tierLevel = tier
+        
+        boats.append(newBoat)
     }
     
     @IBOutlet weak var moneyLabel: UILabel!
