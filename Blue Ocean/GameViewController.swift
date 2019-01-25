@@ -12,7 +12,7 @@ import SpriteKit
 
 var tier = 9
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     var boats : [boat] = []
     
@@ -21,19 +21,12 @@ class GameViewController: UIViewController {
     var updateTimer: Timer? = nil
     var money = Int()
     var stars = Int()
-    var distance = Int()
     
     override func viewDidLoad() {
         
         presentAdMobBanner()
         createAndLoadPopUp()
         createAndLoadRewardBasedVideo()
-        
-        settingsView.isHidden = true
-        logView.isHidden = true
-        moneyView.isHidden = true
-        inventoryView.isHidden = true
-        dockedView.isHidden = true
         
         super.viewDidLoad()
         if let view = view as? SKView {
@@ -53,8 +46,6 @@ class GameViewController: UIViewController {
             initBoat(imgName: "aircraftCarrier", tier: 4)
             
             passMasterBoat = boats[2]
-            
-            globalDistanceLeft = 1
         }
     }
     
@@ -69,20 +60,53 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var starsLabel: UILabel!
-    @IBOutlet weak var distanceLeft: UILabel!
     
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var logView: UIView!
     @IBOutlet weak var moneyView: UIView!
     @IBOutlet weak var inventoryView: UIView!
-    @IBOutlet weak var dockedView: UIView!
     
     
     @IBOutlet weak var bannerView: GADBannerView!
     fileprivate var popUpAd: GADInterstitial!
-    fileprivate var rewardBasedVide: GADRewardBasedVideoAd!
+    fileprivate var rewardBasedVideo: GADRewardBasedVideoAd!
     
-    fileprivate var rewardBasedVideoAsRequestInProgress = false
+    fileprivate var rewardBasedVideoAdRequestInProgress = false
+    
+    // MARK: GADRewardBasedVideoAdDelegate implementation
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didFailToLoadWithError error: Error) {
+        rewardBasedVideoAdRequestInProgress = false
+        print("Reward based video ad failed to load: \(error.localizedDescription)")
+    }
+    
+    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        rewardBasedVideoAdRequestInProgress = false
+        print("Reward based video ad is received.")
+    }
+    
+    func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Opened reward based video ad.")
+    }
+    
+    func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad started playing.")
+    }
+    
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad is closed.")
+    }
+    
+    func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad will leave application.")
+    }
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didRewardUserWith reward: GADAdReward) {
+        print("Reward received with currency: \(reward.type), amount \(reward.amount).")
+        
+    }
     
     fileprivate func presentAdMobBanner() {
         bannerView.adUnitID = "ca-app-pub-7949947864760784/6316530527"
@@ -102,10 +126,25 @@ class GameViewController: UIViewController {
     }
     
     fileprivate func createAndLoadRewardBasedVideo() {
-        
+        rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
+        rewardBasedVideo?.delegate = self
+        if !rewardBasedVideoAdRequestInProgress && rewardBasedVideo?.isReady == false {
+            rewardBasedVideo?.load(GADRequest(),
+                                   withAdUnitID: adMobRewardBasedVideoAdUnitId)
+            rewardBasedVideoAdRequestInProgress = true
+        }
     }
     
     @IBAction func changeBoat(_ sender: Any) {
+    }
+    
+    fileprivate func presentRewardBasedVideoAd() {
+        if rewardBasedVideo?.isReady == true {
+            rewardBasedVideo?.present(fromRootViewController: self)
+        } else {
+            print("Reward Based Video Ad wasn't ready")
+        }
+        createAndLoadRewardBasedVideo()
     }
     
     func presentPopUpAd() {
@@ -117,47 +156,11 @@ class GameViewController: UIViewController {
         createAndLoadPopUp()
     }
     
-    @IBAction func keepGoing(_ sender: Any) {
-        if let view = view as? SKView {
-            // Create the scene programmatically
-            let scene = GameScene(size: view.bounds.size)
-            scene.scaleMode = .resizeFill
-            view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
-            view.presentScene(scene)
-            settingsView.isHidden = true
-            logView.isHidden = true
-            moneyView.isHidden = true
-            inventoryView.isHidden = true
-            dockedView.isHidden = true
-            globalDocked = false
-            globalDistanceLeft = 15
-    }
-    }
-    
     @objc func update() {
         money = globalMoney
         moneyLabel.text = "$\(money)"
         
-        distance = globalDistanceLeft
-        distanceLeft.text = "\(distance)km"
-        
-        if globalDocked == true {
-            distanceLeft.text = "Docked"
-            dockView()
-        }
-        
     }
-    
-    func dockView() {
-        settingsView.isHidden = false
-        logView.isHidden = false
-        moneyView.isHidden = false
-        inventoryView.isHidden = false
-        dockedView.isHidden = false
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }

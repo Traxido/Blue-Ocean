@@ -18,10 +18,8 @@ class boat {
 }
 
 var globalMoney = 0
-var globalDistanceLeft = 0
 var globalStars = 0
 var globalXp = 0
-var globalDocked = false
 
 var passMasterBoat = boat()
 
@@ -88,8 +86,6 @@ class GameScene: SKScene {
     var addGarbageTimer: Timer? = nil
     var loadBoat : Timer? = nil
     var playOceanSound : Timer? = nil
-    var distanceTimer : Timer? = nil
-    var dockingTimer: Timer? = nil
     
     //collections
     var potentialGarbage : [String] = ["baggie","book","book2","book3","book6","bottle","bottle1","bottle2","brush","cd","paper","paper1","paper2","paper3","paper4","plasticBag","tool","wheel"]
@@ -163,77 +159,6 @@ class GameScene: SKScene {
         boatBubbles.zPosition = -1
         boatBubbles.particleScale = CGFloat(0.1)
         Node.addChild(boatBubbles)
-    }
-    
-    func animateBeachWater() {
-        beachWater.run(.sequence([
-            .wait(forDuration: 10),
-            .repeatForever(.sequence([
-                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 105), duration: 1.2),
-                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 140), duration: 0.8)
-                ]))
-            ]))
-    }
-    
-    func animateBeach() {
-        beach.run(.sequence([
-            .wait(forDuration: 10),
-            .repeatForever(.sequence([
-                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 90), duration: 0.8),
-                .move(to: CGPoint(x: self.frame.width / 2, y: self.frame.height - 120), duration: 1.2)
-                ]))
-            ]))
-    }
-    
-    func bringNodeIntoView(node: SKSpriteNode, position: CGPoint) {
-        node.run(.sequence([
-            .wait(forDuration: TimeInterval() * 2),
-            .repeatForever(.sequence([
-                .move(to: position, duration: 10)
-                ]))
-            ]))
-    }
-    
-    func boatLands() {
-        masterBoat.run(.sequence([
-            .wait(forDuration: 10),
-            .sequence([
-                .move(to: CGPoint(x: self.frame.width / 2, y: (self.frame.height / 2) + 90), duration: 1.5)
-                ])
-            ]))
-    }
-    
-    @objc func dockBoat() {
-        dockingTimer?.invalidate()
-        globalDocked = true
-    }
-    
-    func beachAppear() {
-        
-        self.dockingTimer = Timer.scheduledTimer(timeInterval: 11.5, target: self, selector: #selector(dockBoat), userInfo: nil, repeats: true)
-        
-        addGarbageTimer?.invalidate()
-        let origin = (self.frame.height)*2
-        
-        beach = SKSpriteNode.init(imageNamed: "beach")
-        beach.position = CGPoint(x: self.frame.width / 2, y: origin - 100)
-        beach.zPosition = 2
-        beach.size = CGSize(width: 600, height: 300)
-        self.addChild(beach)
-        
-        beachWater = SKSpriteNode.init(imageNamed: "beachWater")
-        beachWater.position = CGPoint(x: self.frame.width / 2, y: origin - 125)
-        beachWater.zPosition = 1
-        beachWater.size = CGSize(width: 600, height: 300)
-        self.addChild(beachWater)
-        
-        bringNodeIntoView(node: beach, position: CGPoint(x: self.frame.width / 2, y: self.frame.height - 100))
-        bringNodeIntoView(node: beachWater, position: CGPoint(x: self.frame.width / 2, y: self.frame.height - 125))
-        
-        animateBeach()
-        animateBeachWater()
-        boatLands()
-        boatBubbles.run(.sequence([.wait(forDuration: 7),.fadeOut(withDuration: 4)]))
     }
     
     func removeItem(node: SKSpriteNode) {
@@ -329,10 +254,6 @@ class GameScene: SKScene {
         loadBoat?.invalidate()
     }
     
-    @objc func updateDistance() {
-        globalDistanceLeft -= 1
-    }
-    
     //random actions
     func boatDriveBy() {
         let randomSpeedBoat = Int(arc4random_uniform(UInt32(speedBoatImageNames.count)))
@@ -360,8 +281,6 @@ class GameScene: SKScene {
     //
     
     override func sceneDidLoad() {
-        
-        self.distanceTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
         self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
         self.loadBoat = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(buildBoat), userInfo: nil, repeats: true)
         self.playOceanSound = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(playWaves), userInfo: nil, repeats: true)
@@ -413,15 +332,6 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
-        if globalDistanceLeft == 0 {
-            if docking == false {
-                docking = true
-                beachAppear()
-                distanceTimer?.invalidate()
-                print("docking")
-                }
-            }
         
         let boatMaxY = masterBoat.frame.maxY
         
