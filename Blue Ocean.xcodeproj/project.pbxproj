@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84D91C302F74CCC9E8BC3512 /* Pods_Blue_Ocean.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61306E59A6B9AB2B392938D /* Pods_Blue_Ocean.framework */; };
+		AE28494721F90A6C00A00CA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE28494621F90A6C00A00CA4 /* GoogleService-Info.plist */; };
+		AE28494921F90B4E00A00CA4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE28494821F90B4E00A00CA4 /* Constants.swift */; };
 		AE34484E21EB1C0900504276 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE34484D21EB1C0900504276 /* AppDelegate.swift */; };
 		AE34485421EB1C0900504276 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE34485321EB1C0900504276 /* GameScene.swift */; };
 		AE34485621EB1C0900504276 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE34485521EB1C0900504276 /* GameViewController.swift */; };
@@ -22,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F5C1D843A2659F80E02F93E /* Pods-Blue Ocean.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue Ocean.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blue Ocean/Pods-Blue Ocean.debug.xcconfig"; sourceTree = "<group>"; };
+		A61306E59A6B9AB2B392938D /* Pods_Blue_Ocean.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Blue_Ocean.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE28494621F90A6C00A00CA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AE28494821F90B4E00A00CA4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AE34484A21EB1C0900504276 /* Blue Ocean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blue Ocean.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE34484D21EB1C0900504276 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE34485321EB1C0900504276 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -36,6 +43,7 @@
 		AEE7F12321F40C0E007DAC9A /* Dimbo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dimbo.ttf; sourceTree = "<group>"; };
 		AEE7F12F21F6BEC6007DAC9A /* splashSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = splashSound.wav; sourceTree = "<group>"; };
 		AEE7F13121F6C003007DAC9A /* waves.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waves.wav; sourceTree = "<group>"; };
+		D3F222140F8641E64051062E /* Pods-Blue Ocean.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blue Ocean.release.xcconfig"; path = "Pods/Target Support Files/Pods-Blue Ocean/Pods-Blue Ocean.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +51,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D91C302F74CCC9E8BC3512 /* Pods_Blue_Ocean.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69BCB8CC13FA990FA1976209 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5F5C1D843A2659F80E02F93E /* Pods-Blue Ocean.debug.xcconfig */,
+				D3F222140F8641E64051062E /* Pods-Blue Ocean.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8C346FFF0E1212B85F98D184 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A61306E59A6B9AB2B392938D /* Pods_Blue_Ocean.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AE34484121EB1C0800504276 = {
 			isa = PBXGroup;
 			children = (
 				AE34484C21EB1C0900504276 /* Blue Ocean */,
 				AE34484B21EB1C0900504276 /* Products */,
+				69BCB8CC13FA990FA1976209 /* Pods */,
+				8C346FFF0E1212B85F98D184 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +101,7 @@
 				AEE7F12F21F6BEC6007DAC9A /* splashSound.wav */,
 				AEE7F13121F6C003007DAC9A /* waves.wav */,
 				AE34484D21EB1C0900504276 /* AppDelegate.swift */,
+				AE28494821F90B4E00A00CA4 /* Constants.swift */,
 				AE34487321ED5A5B00504276 /* waterSplash.sks */,
 				AE34486D21EB2F0300504276 /* Bubbles.sks */,
 				AE34485321EB1C0900504276 /* GameScene.swift */,
@@ -81,6 +110,7 @@
 				AE34485A21EB1C0A00504276 /* Assets.xcassets */,
 				AE34485C21EB1C0A00504276 /* LaunchScreen.storyboard */,
 				AE34485F21EB1C0A00504276 /* Info.plist */,
+				AE28494621F90A6C00A00CA4 /* GoogleService-Info.plist */,
 			);
 			path = "Blue Ocean";
 			sourceTree = "<group>";
@@ -92,9 +122,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE34486221EB1C0A00504276 /* Build configuration list for PBXNativeTarget "Blue Ocean" */;
 			buildPhases = (
+				D903030941C40F2FA27D79D8 /* [CP] Check Pods Manifest.lock */,
 				AE34484621EB1C0900504276 /* Sources */,
 				AE34484721EB1C0900504276 /* Frameworks */,
 				AE34484821EB1C0900504276 /* Resources */,
+				6BFDC0E2C7D69761DFF3BB6C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -150,12 +182,62 @@
 				AE34485E21EB1C0A00504276 /* LaunchScreen.storyboard in Resources */,
 				AEE7F13021F6BEC6007DAC9A /* splashSound.wav in Resources */,
 				AEE7F12421F40C0E007DAC9A /* Dimbo.ttf in Resources */,
+				AE28494721F90A6C00A00CA4 /* GoogleService-Info.plist in Resources */,
 				AEE7F12221F40B02007DAC9A /* RifficFree-Bold.ttf in Resources */,
 				AE34486E21EB2F0300504276 /* Bubbles.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6BFDC0E2C7D69761DFF3BB6C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Blue Ocean/Pods-Blue Ocean-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Blue Ocean/Pods-Blue Ocean-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D903030941C40F2FA27D79D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Blue Ocean-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AE34484621EB1C0900504276 /* Sources */ = {
@@ -165,6 +247,7 @@
 				AE34485421EB1C0900504276 /* GameScene.swift in Sources */,
 				AE34485621EB1C0900504276 /* GameViewController.swift in Sources */,
 				AE34484E21EB1C0900504276 /* AppDelegate.swift in Sources */,
+				AE28494921F90B4E00A00CA4 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +391,7 @@
 		};
 		AE34486321EB1C0A00504276 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F5C1D843A2659F80E02F93E /* Pods-Blue Ocean.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -326,6 +410,7 @@
 		};
 		AE34486421EB1C0A00504276 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3F222140F8641E64051062E /* Pods-Blue Ocean.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

@@ -21,6 +21,7 @@ var globalMoney = 0
 var globalDistanceLeft = 0
 var globalStars = 0
 var globalXp = 0
+var globalDocked = false
 
 var passMasterBoat = boat()
 
@@ -36,7 +37,6 @@ class GameScene: SKScene {
     
     //Sound
     let splashSound = SKAction.playSoundFileNamed("splashSound.wav", waitForCompletion: false)
-    
     
     //conversioons
     var passedMasterBoat = boat()
@@ -57,7 +57,6 @@ class GameScene: SKScene {
     let tier4BubbleOffset : CGFloat = 50
     
     var localTier = Int()
-    
     
     //boat specifics
     var boatReach = CGFloat()
@@ -83,12 +82,14 @@ class GameScene: SKScene {
     //user specific
     var levelMultipler = 1
     var level = 1
+    var docking = false
     
     //timers
-    var removeTimer: Timer? = nil
     var addGarbageTimer: Timer? = nil
     var loadBoat : Timer? = nil
     var playOceanSound : Timer? = nil
+    var distanceTimer : Timer? = nil
+    var dockingTimer: Timer? = nil
     
     //collections
     var potentialGarbage : [String] = ["baggie","book","book2","book3","book6","bottle","bottle1","bottle2","brush","cd","paper","paper1","paper2","paper3","paper4","plasticBag","tool","wheel"]
@@ -197,15 +198,21 @@ class GameScene: SKScene {
         masterBoat.run(.sequence([
             .wait(forDuration: 10),
             .sequence([
-                .move(to: CGPoint(x: self.frame.width / 2, y: (beach.position.y) - 850), duration: 1.5)
+                .move(to: CGPoint(x: self.frame.width / 2, y: (self.frame.height / 2) + 90), duration: 1.5)
                 ])
             ]))
     }
     
+    @objc func dockBoat() {
+        dockingTimer?.invalidate()
+        globalDocked = true
+    }
+    
     func beachAppear() {
         
-        addGarbageTimer?.invalidate()
+        self.dockingTimer = Timer.scheduledTimer(timeInterval: 11.5, target: self, selector: #selector(dockBoat), userInfo: nil, repeats: true)
         
+        addGarbageTimer?.invalidate()
         let origin = (self.frame.height)*2
         
         beach = SKSpriteNode.init(imageNamed: "beach")
@@ -213,20 +220,6 @@ class GameScene: SKScene {
         beach.zPosition = 2
         beach.size = CGSize(width: 600, height: 300)
         self.addChild(beach)
-        
-        let dock = SKSpriteNode.init(imageNamed: "dock")
-        dock.size = CGSize(width: 30, height: 550)
-        dock.position = CGPoint(x: (self.frame.width / 2) - 5, y: origin)
-        dock.zPosition = 3
-        self.addChild(dock)
-        
-//        woodBoat = SKSpriteNode.init(imageNamed: "woodBoat")
-//        woodBoat.size = CGSize(width: 100, height: 100)
-//        woodBoat.position = CGPoint(x: (beach.frame.width / 8), y: (beach.position.y) + 30)
-//        woodBoat.name = "woodBoat"
-//        woodBoat.zPosition = 3
-//        woodBoat.zRotation = (20 * .pi) / 180
-//        self.addChild(woodBoat)
         
         beachWater = SKSpriteNode.init(imageNamed: "beachWater")
         beachWater.position = CGPoint(x: self.frame.width / 2, y: origin - 125)
@@ -236,12 +229,10 @@ class GameScene: SKScene {
         
         bringNodeIntoView(node: beach, position: CGPoint(x: self.frame.width / 2, y: self.frame.height - 100))
         bringNodeIntoView(node: beachWater, position: CGPoint(x: self.frame.width / 2, y: self.frame.height - 125))
-        bringNodeIntoView(node: dock, position: CGPoint(x: (self.frame.width / 3), y: self.frame.height))
         
         animateBeach()
         animateBeachWater()
         boatLands()
-        
         boatBubbles.run(.sequence([.wait(forDuration: 7),.fadeOut(withDuration: 4)]))
     }
     
@@ -286,49 +277,6 @@ class GameScene: SKScene {
         newLocation = CGPoint(x: randX, y: -50)
         
         garbageSpriteToAdd.run(.sequence([.move(to: newLocation, duration: 10),.removeFromParent()]))
-        
-    }
-    
-    //random actions
-    func boatDriveBy() {
-        let randomSpeedBoat = Int(arc4random_uniform(UInt32(speedBoatImageNames.count)))
-        let speedBoat = SKSpriteNode.init(imageNamed: speedBoatImageNames[randomSpeedBoat])
-        speedBoat.size = CGSize(width: 100, height: 100)
-        speedBoat.zPosition = 10
-        speedBoat.position = CGPoint(x: (self.frame.width / 4)*3, y: -200)
-        self.addChild(speedBoat)
-        addBoatBubbles(Node: speedBoat)
-        animateNodes(node: speedBoat)
-        speedBoat.run(.sequence([
-            .wait(forDuration: TimeInterval() * 0),
-            .repeatForever(.sequence([
-                .wait(forDuration: 5),
-                .move(to: CGPoint(x: (self.frame.width / 8)*7, y: self.frame.height + 200), duration: 5),
-                .removeFromParent()
-                ]))
-            ]))
-    }
-    
-    //
-    //
-    //  OVERRIDE FUNCTIONS
-    //
-    //
-    
-    override func sceneDidLoad() {
-        
-        moneyNode.text = "$\(globalMoney)"
-        moneyNode.fontSize = 20
-        moneyNode.position = CGPoint(x: self.frame.minX + 60, y: self.frame.height - 42)
-        moneyNode.fontColor = UIColor(red:0.49, green:0.75, blue:0.29, alpha:1.0)
-        moneyNode.zPosition = 5
-        //self.addChild(moneyNode)
-        
-        self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
-        self.loadBoat = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(buildBoat), userInfo: nil, repeats: true)
-        self.playOceanSound = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(playWaves), userInfo: nil, repeats: true)
-        let waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
-        run(waves)
         
     }
     
@@ -377,8 +325,49 @@ class GameScene: SKScene {
         
         animateNodes(node: masterBoat)
         addBoatBubbles(Node: masterBoat)
-
+        
         loadBoat?.invalidate()
+    }
+    
+    @objc func updateDistance() {
+        globalDistanceLeft -= 1
+    }
+    
+    //random actions
+    func boatDriveBy() {
+        let randomSpeedBoat = Int(arc4random_uniform(UInt32(speedBoatImageNames.count)))
+        let speedBoat = SKSpriteNode.init(imageNamed: speedBoatImageNames[randomSpeedBoat])
+        speedBoat.size = CGSize(width: 100, height: 100)
+        speedBoat.zPosition = 10
+        speedBoat.position = CGPoint(x: (self.frame.width / 4)*3, y: -200)
+        self.addChild(speedBoat)
+        addBoatBubbles(Node: speedBoat)
+        animateNodes(node: speedBoat)
+        speedBoat.run(.sequence([
+            .wait(forDuration: TimeInterval() * 0),
+            .repeatForever(.sequence([
+                .wait(forDuration: 5),
+                .move(to: CGPoint(x: (self.frame.width / 8)*7, y: self.frame.height + 200), duration: 5),
+                .removeFromParent()
+                ]))
+            ]))
+    }
+    
+    //
+    //
+    //  OVERRIDE FUNCTIONS
+    //
+    //
+    
+    override func sceneDidLoad() {
+        
+        self.distanceTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
+        self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
+        self.loadBoat = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(buildBoat), userInfo: nil, repeats: true)
+        self.playOceanSound = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(playWaves), userInfo: nil, repeats: true)
+        let waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
+        run(waves)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -424,6 +413,15 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
+        if globalDistanceLeft == 0 {
+            if docking == false {
+                docking = true
+                beachAppear()
+                distanceTimer?.invalidate()
+                print("docking")
+                }
+            }
         
         let boatMaxY = masterBoat.frame.maxY
         

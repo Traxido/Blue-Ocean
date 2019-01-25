@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>110095102547-53jp78u65g3p8gq36cmpb6cbootvh4au.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.110095102547-53jp78u65g3p8gq36cmpb6cbootvh4au</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCPD3Q-hCK68-DnhS5JBdfyi89r5zYZZ1U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>110095102547</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>AndrewSheron.Blue-Ocean</string>
+	<key>PROJECT_ID</key>
+	<string>blue-ocean-95fb6</string>
+	<key>STORAGE_BUCKET</key>
+	<string>blue-ocean-95fb6.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:110095102547:ios:0f491e5c7fa247d9</string>
+	<key>DATABASE_URL</key>
+	<string>https://blue-ocean-95fb6.firebaseio.com</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-7949947864760784~2701429580</string>
+</dict>
+</plist>
