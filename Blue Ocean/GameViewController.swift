@@ -106,6 +106,9 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func changeBoat(_ sender: Any) {
+    }
+    
+    func presentPopUpAd() {
         if popUpAd.isReady {
             popUpAd.present(fromRootViewController: self)
         } else {
