@@ -1,7 +1,5 @@
 # Blue-Ocean
 
-# MOVED TO Blue-Ocean-App
-
 Blue Ocean is an IOS Game currently in development. It's founder and creator is Andrew Sheron.
 
 The Goal of Blue Ocean is to raise awareness of the pollution in our oceans, shine a light on companies that are trying to 
