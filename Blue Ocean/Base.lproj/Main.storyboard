@@ -228,7 +228,7 @@
                                     <action selector="closeMenus:" destination="BV1-FR-VrT" eventType="touchUpInside" id="fhR-cB-rwn"/>
                                 </connections>
                             </button>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHo-P7-OLX">
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHo-P7-OLX">
                                 <rect key="frame" x="37.5" y="83.5" width="300" height="500"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buy Boats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3W-o6-Ocm">
@@ -530,11 +530,6 @@
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="FXK-Jb-e7m" secondAttribute="trailing" constant="16" id="z7N-Yi-C4L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="H7L-Dz-AN6"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="bannerView" destination="SKN-hF-uRd" id="sDn-gm-xpH"/>
