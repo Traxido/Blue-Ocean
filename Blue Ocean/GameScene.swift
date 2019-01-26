@@ -9,21 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class boat {
-    var name = String()
-    var imageName = String()
-    var tierLevel = Int()
-    var bubblesOffset = CGFloat()
-    
-}
-
-var globalMoney = 0
-var globalStars = 0
-var globalXp = 0
-
 var passMasterBoat = boat()
-
-
 
 class GameScene: SKScene {
     
@@ -34,7 +20,7 @@ class GameScene: SKScene {
     //
     
     //Sound
-    let splashSound = SKAction.playSoundFileNamed("splashSound.wav", waitForCompletion: false)
+    var splashSound = SKAction.playSoundFileNamed("splashSound.wav", waitForCompletion: false)
     
     //conversioons
     var passedMasterBoat = boat()
@@ -52,13 +38,13 @@ class GameScene: SKScene {
     let tier1BubbleOffset : CGFloat = 0
     let tier2BubbleOffset : CGFloat = 0
     let tier3BubbleOffset : CGFloat = 30
-    let tier4BubbleOffset : CGFloat = 50
+    let tier4BubbleOffset : CGFloat = 70
     
     var localTier = Int()
     
     //boat specifics
     var boatReach = CGFloat()
-    var listOfBoatReachCoords : [CGFloat] = [-100,-99]
+    var listOfBoatReachCoords : [CGFloat] = [-100]
     var bubblesOffsetY = CGFloat()
     var masterBoatWidth = CGFloat()
     var masterBoatHeight = CGFloat()
@@ -163,14 +149,14 @@ class GameScene: SKScene {
     
     func removeItem(node: SKSpriteNode) {
         
-        globalMoney += 10
+        globalMoney += globalWorth*level*globalMultiplier
         globalXp += 1
         moneyNode.text = "$\(globalMoney)"
         addedCash()
         
         let valueSprite = SKLabelNode(fontNamed: "RifficFree-Bold")
         valueSprite.color = UIColor.white
-        valueSprite.text = "$10"
+        valueSprite.text = "$\(globalWorth*level)"
         valueSprite.position = CGPoint(x: node.position.x, y: node.position.y + 10)
         valueSprite.fontSize = 18
         valueSprite.zPosition = 10
@@ -179,7 +165,9 @@ class GameScene: SKScene {
         
         removeNodeAnimation(node: node)
         animateValue(labelNode: valueSprite)
-        run(splashSound)
+        if soundOn == true {
+            run(splashSound)
+        }
         
     }
     
@@ -204,14 +192,17 @@ class GameScene: SKScene {
         garbageSpriteToAdd.run(.sequence([.move(to: newLocation, duration: 10),.removeFromParent()]))
         
     }
+    var waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
     
     @objc func playWaves() {
-        let waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
-        run(waves)
+        if soundOn == true {
+            run(waves)
+        }
     }
     
     @objc func buildBoat() {
         
+        masterBoat.removeFromParent()
         passedMasterBoat = passMasterBoat
         
         if passedMasterBoat.tierLevel == 1 {
@@ -235,6 +226,8 @@ class GameScene: SKScene {
             masterBoatHeight = tier4Height
             bubblesOffsetY = tier4BubbleOffset
         }
+        
+        listOfBoatReachCoords.removeAll()
         
         print(passedMasterBoat.imageName)
         for i in Int((self.frame.width / 2) - boatReach )...Int((self.frame.width / 2) + boatReach ) {
@@ -283,10 +276,11 @@ class GameScene: SKScene {
     override func sceneDidLoad() {
         self.addGarbageTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addGarbage), userInfo: nil, repeats: true)
         self.loadBoat = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(buildBoat), userInfo: nil, repeats: true)
-        self.playOceanSound = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(playWaves), userInfo: nil, repeats: true)
         let waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
-        run(waves)
         
+        if soundOn == true {
+            run(waves)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -297,7 +291,9 @@ class GameScene: SKScene {
                 
                 if targetNode == self {
                     
-                    run(splashSound)
+                    if soundOn == true {
+                        run(splashSound)
+                    }
                     
                 } else if targetNode == masterBoat {
                     
@@ -331,9 +327,33 @@ class GameScene: SKScene {
         self.backgroundColor = UIColor(red:0.00, green:0.84, blue:0.84, alpha:1.0)
     }
     
+    var isSoundPlaying = true
+    
     override func update(_ currentTime: TimeInterval) {
         
+        if globalChangedBoat == true {
+            buildBoat()
+            globalChangedBoat = false
+        }
+        
         let boatMaxY = masterBoat.frame.maxY
+        
+        if soundOn == false {
+            splashSound = SKAction()
+            waves = SKAction()
+            playOceanSound?.invalidate()
+            isSoundPlaying = true
+        } else {
+            if isSoundPlaying == true {
+                isSoundPlaying = false
+                waves = SKAction.playSoundFileNamed("waves.wav", waitForCompletion: false)
+                splashSound = SKAction.playSoundFileNamed("splashSound.wav", waitForCompletion: false)
+                self.playOceanSound = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(playWaves), userInfo: nil, repeats: true)
+                playWaves()
+            } else {
+                
+            }
+        }
         
         for i in 0...(listOfBoatReachCoords.count - 1) {
             
@@ -371,4 +391,3 @@ class GameScene: SKScene {
         
 }
 }
-

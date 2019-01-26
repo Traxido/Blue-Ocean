@@ -10,23 +10,71 @@ import GoogleMobileAds
 import UIKit
 import SpriteKit
 
-var tier = 9
-
-class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate {
+class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var boats : [boat] = []
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return globalBoats.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! BuyBoatCollectionViewCell
+        
+        cell.boatImg.image = UIImage.init(named: globalBoats[indexPath.row].imageName)
+        if globalBoats[indexPath.row].owned == true {
+            cell.lockedImage.isHidden = true
+        } else {
+            cell.lockedImage.isHidden = false
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        currentIndex = indexPath.row
+        let boat = globalBoats[indexPath.row]
+        watchAdsButton.isHidden = false
+        
+        boatPreviewImage.image = UIImage.init(named: boat.imageName)
+        boatPreviewName.text = boat.name
+        boatPreviewTier.text = "Tier \(boat.tierLevel) | \(boat.multiplier)x Multiplier"
+        buyButton.setTitle("$\(boat.cost)", for: .normal)
+        
+        checkForNumberOfAds(index: currentIndex)
+        
+        if boat.owned == true {
+            watchAdsButton.isHidden = true
+            buyButton.setTitle("Play", for: .normal)
+        }
+        
+        if boat.adsNeeded > 0 {
+            buyButton.isHidden = true
+        } else {
+            buyButton.isHidden = false
+        }
+    }
+    
+    @IBOutlet weak var boatPreviewImage: UIImageView!
+    @IBOutlet weak var boatPreviewName: UILabel!
+    @IBOutlet weak var boatPreviewTier: UILabel!
+    
+    
+    @IBOutlet weak var buyBoatsCollectionView: UICollectionView!
+    var boatsOwned : [Bool] = []
     
     var selectetBoat = boat()
+    var currentIndex = 0
     
     var updateTimer: Timer? = nil
     var money = Int()
     var stars = Int()
     
     override func viewDidLoad() {
-        
         presentAdMobBanner()
         createAndLoadPopUp()
         createAndLoadRewardBasedVideo()
+        
+        buyButton.isEnabled = false
         
         super.viewDidLoad()
         if let view = view as? SKView {
@@ -40,26 +88,72 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             view.presentScene(scene)
             self.updateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             
-            initBoat(imgName: "woodBoat", tier: 1)
-            initBoat(imgName: "patrolBoat", tier: 2)
-            initBoat(imgName: "freighter", tier: 3)
-            initBoat(imgName: "aircraftCarrier", tier: 4)
-            
-            passMasterBoat = boats[2]
+            initBoat(name: "Wood Boat", imgName: "woodBoat", tier: 1, cost: 0, adsNeeded: 0, multiplier: 1)
+            initBoat(name: "Patrol Boat", imgName: "patrolBoat", tier: 2, cost: 10000, adsNeeded: 2, multiplier: 1)
+            initBoat(name: "Freighter", imgName: "freighter", tier: 3, cost: 200000, adsNeeded: 3, multiplier: 3)
+            initBoat(name: "Aircraft Carrier", imgName: "aircraftCarrier", tier: 4, cost: 5000000, adsNeeded: 5, multiplier: 4)
+            globalBoats[0].owned = true
+            passMasterBoat = globalBoats[0]
         }
     }
     
-    func initBoat(imgName: String, tier: Int) {
+    func initBoat(name: String, imgName: String, tier: Int, cost: Int, adsNeeded: Int, multiplier: Int) {
         let newBoat = boat()
-        newBoat.name = imgName
+        newBoat.name = name
         newBoat.imageName = imgName
         newBoat.tierLevel = tier
+        newBoat.cost = cost
+        newBoat.adsNeeded = adsNeeded
+        newBoat.multiplier = multiplier
         
-        boats.append(newBoat)
+        globalBoats.append(newBoat)
     }
     
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var starsLabel: UILabel!
+    
+    @IBOutlet weak var settings: UIView!
+    @IBAction func soundSwitch(_ sender: Any) {
+        if soundOn == true {
+            soundOn = false
+        } else {
+            soundOn = true
+        }
+    }
+    
+    @IBOutlet weak var buyBoats: UIView!
+    @IBOutlet weak var watchAdsButton: UIButton!
+    @IBOutlet weak var buyButton: UIButton!
+    
+    
+    @IBAction func buyBoat(_ sender: Any) {
+        
+        if globalBoats[currentIndex].owned == true {
+            //play
+            closeMenusProg()
+            globalChangedBoat = true
+            globalMultiplier = globalBoats[currentIndex].multiplier
+        } else {
+            checkFunds(cost: globalBoats[currentIndex].cost)
+        }
+        
+        
+        watchAdsButton.isHidden = true
+        globalBoats[currentIndex].owned = true
+        buyButton.setTitle("Play", for: .normal)
+        buyBoatsCollectionView.reloadData()
+        
+        
+        passMasterBoat = globalBoats[currentIndex]
+    }
+    @IBAction func watchAds(_ sender: Any) {
+        createAndLoadRewardBasedVideo()
+        presentRewardBasedVideoAd()
+    }
+    
+    
+    
+    
     
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var logView: UIView!
@@ -102,10 +196,23 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         print("Reward based video ad will leave application.")
     }
     
+    func checkForNumberOfAds(index: Int) {
+        let adsNeeded = globalBoats[index].adsNeeded
+        if adsNeeded == 0 {
+            watchAdsButton.isHidden = true
+            buyButton.isEnabled = true
+        } else {
+            buyButton.isEnabled = false
+            watchAdsButton.setTitle("Watch \(globalBoats[index].adsNeeded) Ads To Unlock", for: .normal)
+        }
+        buyBoatsCollectionView.reloadData()
+    }
+    
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
                             didRewardUserWith reward: GADAdReward) {
         print("Reward received with currency: \(reward.type), amount \(reward.amount).")
-        
+        globalBoats[currentIndex].adsNeeded -= 1
+        checkForNumberOfAds(index: currentIndex)
     }
     
     fileprivate func presentAdMobBanner() {
@@ -138,6 +245,33 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     @IBAction func changeBoat(_ sender: Any) {
     }
     
+    var anyMenuOpen = false
+    
+    @IBOutlet weak var menuUnderlay: UIButton!
+    @IBAction func closeMenus(_ sender: Any) {
+        closeMenusProg()
+    }
+    
+    func closeMenusProg() {
+        if anyMenuOpen == true {
+            settings.isHidden = true
+            buyBoats.isHidden = true
+            menuUnderlay.isHidden = true
+        }
+    }
+    
+    @IBAction func openSettings(_ sender: Any) {
+        anyMenuOpen = true
+        settings.isHidden = false
+        menuUnderlay.isHidden = false
+    }
+    
+    @IBAction func openBoats(_ sender: Any) {
+        anyMenuOpen = true
+        buyBoats.isHidden = false
+        menuUnderlay.isHidden = false
+    }
+    
     fileprivate func presentRewardBasedVideoAd() {
         if rewardBasedVideo?.isReady == true {
             rewardBasedVideo?.present(fromRootViewController: self)
@@ -155,6 +289,15 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
         createAndLoadPopUp()
     }
+    
+    func checkFunds(cost: Int) {
+        if globalMoney >= cost {
+            globalMoney -= cost
+        } else {
+            print("Not Enough Funds")
+        }
+    }
+    
     
     @objc func update() {
         money = globalMoney
