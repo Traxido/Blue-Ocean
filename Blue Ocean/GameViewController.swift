@@ -74,7 +74,20 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
         createAndLoadPopUp()
         createAndLoadRewardBasedVideo()
         
-        buyButton.isEnabled = false
+        
+        for i in 1...40 {
+            let startXp = levels[levels.count-1]
+            let newXp = Double(startXp) * 1.8
+            levels.append(Int(newXp))
+            print("Level \(i+1) = \(newXp)")
+            if globalXp >= Int(newXp) {
+                globalLvl = i
+                levelLabel.text = "Lvl \(globalLvl)"
+            } else {
+                
+            }
+        }
+        print(levels)
         
         super.viewDidLoad()
         if let view = view as? SKView {
@@ -82,14 +95,14 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
             let scene = GameScene(size: view.bounds.size)
             scene.scaleMode = .resizeFill
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+            //view.showsFPS = true
+            //view.showsNodeCount = true
             scene.passedMasterBoat.tierLevel = 4
             view.presentScene(scene)
             self.updateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             
             initBoat(name: "Wood Boat", imgName: "woodBoat", tier: 1, cost: 0, adsNeeded: 0, multiplier: 1)
-            initBoat(name: "Patrol Boat", imgName: "patrolBoat", tier: 2, cost: 10000, adsNeeded: 2, multiplier: 1)
+            initBoat(name: "Patrol Boat", imgName: "patrolBoat", tier: 2, cost: 10000, adsNeeded: 2, multiplier: 2)
             initBoat(name: "Freighter", imgName: "freighter", tier: 3, cost: 200000, adsNeeded: 3, multiplier: 3)
             initBoat(name: "Aircraft Carrier", imgName: "aircraftCarrier", tier: 4, cost: 5000000, adsNeeded: 5, multiplier: 4)
             globalBoats[0].owned = true
@@ -109,6 +122,7 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
         globalBoats.append(newBoat)
     }
     
+    @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var moneyLabel: UILabel!
     @IBOutlet weak var starsLabel: UILabel!
     
@@ -134,17 +148,9 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
             globalChangedBoat = true
             globalMultiplier = globalBoats[currentIndex].multiplier
         } else {
+            //Buy
             checkFunds(cost: globalBoats[currentIndex].cost)
         }
-        
-        
-        watchAdsButton.isHidden = true
-        globalBoats[currentIndex].owned = true
-        buyButton.setTitle("Play", for: .normal)
-        buyBoatsCollectionView.reloadData()
-        
-        
-        passMasterBoat = globalBoats[currentIndex]
     }
     @IBAction func watchAds(_ sender: Any) {
         createAndLoadRewardBasedVideo()
@@ -201,6 +207,7 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
         if adsNeeded == 0 {
             watchAdsButton.isHidden = true
             buyButton.isEnabled = true
+            buyButton.isHidden = false
         } else {
             buyButton.isEnabled = false
             watchAdsButton.setTitle("Watch \(globalBoats[index].adsNeeded) Ads To Unlock", for: .normal)
@@ -293,6 +300,13 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
     func checkFunds(cost: Int) {
         if globalMoney >= cost {
             globalMoney -= cost
+            watchAdsButton.isHidden = true
+            globalBoats[currentIndex].owned = true
+            buyButton.setTitle("Play", for: .normal)
+            buyBoatsCollectionView.reloadData()
+            
+            
+            passMasterBoat = globalBoats[currentIndex]
         } else {
             print("Not Enough Funds")
         }
@@ -302,6 +316,7 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
     @objc func update() {
         money = globalMoney
         moneyLabel.text = "$\(money)"
+        levelLabel.text = "Lvl \(globalLvl)"
         
     }
     override var prefersStatusBarHidden: Bool {

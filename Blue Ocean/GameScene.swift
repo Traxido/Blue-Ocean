@@ -64,8 +64,6 @@ class GameScene: SKScene {
     var moneyNode = SKLabelNode(fontNamed: "RifficFree-Bold")
     
     //user specific
-    var levelMultipler = 1
-    var level = 1
     var docking = false
     
     //timers
@@ -149,14 +147,23 @@ class GameScene: SKScene {
     
     func removeItem(node: SKSpriteNode) {
         
-        globalMoney += globalWorth*level*globalMultiplier
+        globalMoney += globalWorth*globalLvl*globalMultiplier
         globalXp += 1
         moneyNode.text = "$\(globalMoney)"
         addedCash()
         
+        for i in 1...40 {
+            let checkLvl = levels[i-1]
+            if globalXp >= Int(checkLvl) {
+                globalLvl = i
+            }
+        }
+        print(globalXp)
+        print(globalLvl)
+        
         let valueSprite = SKLabelNode(fontNamed: "RifficFree-Bold")
         valueSprite.color = UIColor.white
-        valueSprite.text = "$\(globalWorth*level)"
+        valueSprite.text = "$\(globalWorth*globalLvl)"
         valueSprite.position = CGPoint(x: node.position.x, y: node.position.y + 10)
         valueSprite.fontSize = 18
         valueSprite.zPosition = 10
@@ -284,41 +291,41 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            for touch in (touches) {
+        for touch in (touches) {
+            
+            let location = touch.location(in: self)
+            let targetNode = atPoint(location)
+            
+            if targetNode == self {
                 
-                let location = touch.location(in: self)
-                let targetNode = atPoint(location)
-                
-                if targetNode == self {
-                    
-                    if soundOn == true {
-                        run(splashSound)
-                    }
-                    
-                } else if targetNode == masterBoat {
-                    
-                } else if targetNode.name == "garbage" {
-                
-                    targetNode.isUserInteractionEnabled = true
-                    removeItem(node: targetNode as! SKSpriteNode)
-                    
+                if soundOn == true {
+                    run(splashSound)
                 }
-                let desiredPath = Bundle.main.path(forResource: "waterSplash", ofType: "sks")
-                splash = NSKeyedUnarchiver.unarchiveObject(withFile: desiredPath!) as! SKEmitterNode
-                splash.position = location
-                splash.particleScale = CGFloat(0.3)
-                splash.zPosition = -1
-                splash.particleScale = CGFloat(0.1)
-                splash.isUserInteractionEnabled = true
-                self.addChild(splash)
                 
-                splash.run(.sequence([
-                    .wait(forDuration: TimeInterval() * 0),
-                    .repeatForever(.sequence([
-                        .wait(forDuration: 1),
-                        .removeFromParent()
-                        ]))
+            } else if targetNode == masterBoat {
+                
+            } else if targetNode.name == "garbage" {
+                
+                targetNode.isUserInteractionEnabled = true
+                removeItem(node: targetNode as! SKSpriteNode)
+                
+            }
+            let desiredPath = Bundle.main.path(forResource: "waterSplash", ofType: "sks")
+            splash = NSKeyedUnarchiver.unarchiveObject(withFile: desiredPath!) as! SKEmitterNode
+            splash.position = location
+            splash.particleScale = CGFloat(0.3)
+            splash.zPosition = -1
+            splash.particleScale = CGFloat(0.1)
+            splash.isUserInteractionEnabled = true
+            self.addChild(splash)
+            
+            splash.run(.sequence([
+                .wait(forDuration: TimeInterval() * 0),
+                .repeatForever(.sequence([
+                    .wait(forDuration: 1),
+                    .removeFromParent()
                     ]))
+                ]))
         }
         
     }
@@ -389,5 +396,5 @@ class GameScene: SKScene {
             }
         }
         
-}
+    }
 }

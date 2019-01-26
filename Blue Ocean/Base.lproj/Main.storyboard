@@ -75,8 +75,8 @@
                                 <color key="textColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lvl 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRM-Wy-x0E">
-                                <rect key="frame" x="166" y="38.5" width="43.5" height="27.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lvl 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRM-Wy-x0E">
+                                <rect key="frame" x="162.5" y="38.5" width="50.5" height="27.5"/>
                                 <fontDescription key="fontDescription" name="RifficFree-Bold" family="Riffic Free" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -213,7 +213,7 @@
                                     <constraint firstAttribute="height" constant="116" id="uvA-DM-TJM"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKN-hF-uRd" customClass="GADBannerView">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKN-hF-uRd" customClass="GADBannerView">
                                 <rect key="frame" x="27.5" y="617" width="320" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -540,6 +540,7 @@
                         <outlet property="buyBoatsCollectionView" destination="eqd-Lm-uUt" id="9zW-uL-xJ0"/>
                         <outlet property="buyButton" destination="FXH-nJ-G06" id="PPM-4a-NbY"/>
                         <outlet property="inventoryView" destination="gTh-Oo-HAf" id="7Dq-PS-TCK"/>
+                        <outlet property="levelLabel" destination="JRM-Wy-x0E" id="mUI-eL-9w5"/>
                         <outlet property="logView" destination="Rq9-4A-1f2" id="f0L-ZG-odj"/>
                         <outlet property="menuUnderlay" destination="vII-hf-d0D" id="3mu-MG-y1y"/>
                         <outlet property="moneyLabel" destination="bV8-8a-Qe2" id="meo-X1-O9F"/>
