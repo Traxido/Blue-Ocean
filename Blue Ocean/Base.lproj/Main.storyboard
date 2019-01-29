@@ -530,11 +530,6 @@
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="FXK-Jb-e7m" secondAttribute="trailing" constant="16" id="z7N-Yi-C4L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="H7L-Dz-AN6"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="bannerView" destination="SKN-hF-uRd" id="sDn-gm-xpH"/>
