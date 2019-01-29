@@ -158,12 +158,10 @@ class GameScene: SKScene {
                 globalLvl = i
             }
         }
-        print(globalXp)
-        print(globalLvl)
         
         let valueSprite = SKLabelNode(fontNamed: "RifficFree-Bold")
         valueSprite.color = UIColor.white
-        valueSprite.text = "$\(globalWorth*globalLvl)"
+        valueSprite.text = "$\(globalWorth*globalLvl*globalMultiplier)"
         valueSprite.position = CGPoint(x: node.position.x, y: node.position.y + 10)
         valueSprite.fontSize = 18
         valueSprite.zPosition = 10

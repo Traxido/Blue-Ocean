@@ -213,7 +213,7 @@
                                     <constraint firstAttribute="height" constant="116" id="uvA-DM-TJM"/>
                                 </constraints>
                             </stackView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKN-hF-uRd" customClass="GADBannerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKN-hF-uRd" customClass="GADBannerView">
                                 <rect key="frame" x="27.5" y="617" width="320" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -530,6 +530,11 @@
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="FXK-Jb-e7m" secondAttribute="trailing" constant="16" id="z7N-Yi-C4L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="H7L-Dz-AN6"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="bannerView" destination="SKN-hF-uRd" id="sDn-gm-xpH"/>

@@ -32,7 +32,7 @@ class boat {
     var multiplier = 1
 }
 
-var globalMoney = 0
+var globalMoney = 10000000
 var globalStars = 0
 var globalXp = 100
 var globalLvl = 0

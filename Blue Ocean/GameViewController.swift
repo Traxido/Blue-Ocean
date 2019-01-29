@@ -44,7 +44,7 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
         
         if boat.owned == true {
             watchAdsButton.isHidden = true
-            buyButton.setTitle("Play", for: .normal)
+            buyButton.setTitle("Choose", for: .normal)
         }
         
         if boat.adsNeeded > 0 {
@@ -69,11 +69,14 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
     var money = Int()
     var stars = Int()
     
+    var adTimer: Timer? = nil
+    
     override func viewDidLoad() {
         presentAdMobBanner()
         createAndLoadPopUp()
         createAndLoadRewardBasedVideo()
         
+        self.adTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(presentPopUpAd), userInfo: nil, repeats: true)
         
         for i in 1...40 {
             let startXp = levels[levels.count-1]
@@ -146,7 +149,9 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
             //play
             closeMenusProg()
             globalChangedBoat = true
+            passMasterBoat = globalBoats[currentIndex]
             globalMultiplier = globalBoats[currentIndex].multiplier
+            print(globalBoats[currentIndex].multiplier)
         } else {
             //Buy
             checkFunds(cost: globalBoats[currentIndex].cost)
@@ -195,7 +200,7 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
     }
     
     func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-        print("Reward based video ad is closed.")
+        createAndLoadRewardBasedVideo()
     }
     
     func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
@@ -249,9 +254,6 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
         }
     }
     
-    @IBAction func changeBoat(_ sender: Any) {
-    }
-    
     var anyMenuOpen = false
     
     @IBOutlet weak var menuUnderlay: UIButton!
@@ -288,9 +290,10 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
         createAndLoadRewardBasedVideo()
     }
     
-    func presentPopUpAd() {
+    @objc func presentPopUpAd() {
         if popUpAd.isReady {
             popUpAd.present(fromRootViewController: self)
+            adTimer?.invalidate()
         } else {
             print("Interstitial ad wasn't ready")
         }
@@ -302,7 +305,7 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
             globalMoney -= cost
             watchAdsButton.isHidden = true
             globalBoats[currentIndex].owned = true
-            buyButton.setTitle("Play", for: .normal)
+            buyButton.setTitle("Choose", for: .normal)
             buyBoatsCollectionView.reloadData()
             
             
