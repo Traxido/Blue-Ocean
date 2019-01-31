@@ -105,8 +105,12 @@ class GameViewController: UIViewController, GADRewardBasedVideoAdDelegate, UICol
             self.updateTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             
             initBoat(name: "Wood Boat", imgName: "woodBoat", tier: 1, cost: 0, adsNeeded: 0, multiplier: 1)
+            initBoat(name: "Sail Boat", imgName: "sailBoat", tier: 1, cost: 750, adsNeeded: 1, multiplier: 1)
             initBoat(name: "Patrol Boat", imgName: "patrolBoat", tier: 2, cost: 10000, adsNeeded: 2, multiplier: 2)
             initBoat(name: "Freighter", imgName: "freighter", tier: 3, cost: 200000, adsNeeded: 3, multiplier: 3)
+            initBoat(name: "Freighter 2", imgName: "freighter2", tier: 3, cost: 210000, adsNeeded: 3, multiplier: 3)
+            initBoat(name: "Tug Boat", imgName: "tugBoat", tier: 3, cost: 250000, adsNeeded: 3, multiplier: 3)
+            initBoat(name: "Medium Yacht", imgName: "yacht_1", tier: 3, cost: 300000, adsNeeded: 3, multiplier: 4)
             initBoat(name: "Aircraft Carrier", imgName: "aircraftCarrier", tier: 4, cost: 5000000, adsNeeded: 5, multiplier: 4)
             globalBoats[0].owned = true
             passMasterBoat = globalBoats[0]
