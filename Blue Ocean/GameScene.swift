@@ -13,8 +13,6 @@ var passMasterBoat = boat()
 
 class GameScene: SKScene {
     
-    //test
-    
     //
     //
     //  VARIABLES
